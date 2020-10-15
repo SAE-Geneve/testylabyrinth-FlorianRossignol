@@ -6,13 +6,30 @@
 
 World::World(const std::string& map, int length) : hero_({0, 0})
 {
+	int n = 0;
 	for (char c:map)
 	{
+		std::pair<int, int> pos = {n % length, n / length};
 		if (c == 'E')
 		{
-			Enemy enemy({0,0});
+			Enemy enemy(pos);
 			enemies_.push_back(enemy);
+			map_[pos] = '.';
 		}
+		if (c == 'P')
+		{
+			Hero hero_(pos);
+			map_[pos] = '.';
+		}
+		if (c == '.')
+		{
+			map_[pos] = '.';
+		}
+		if (c == '#')
+		{
+			map_[pos] = '#';
+		}
+		n++;
 	}
 }
 
