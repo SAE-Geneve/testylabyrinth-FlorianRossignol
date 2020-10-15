@@ -18,7 +18,7 @@ World::World(const std::string& map, int length) : hero_({0, 0})
 		}
 		if (c == 'P')
 		{
-			Hero hero_(pos);
+			Hero hero(pos);
 			map_[pos] = '.';
 		}
 		if (c == '.')
@@ -35,10 +35,11 @@ World::World(const std::string& map, int length) : hero_({0, 0})
 
 void World::EraseDead()
 {
+	enemies_.erase(
 	std::remove_if(enemies_.begin(), enemies_.end(), [] (Enemy p)
 	{
 		return p.IsDead();
-	});
+	}), enemies_.end());
 }
 
 bool World::HasEnemies() const
@@ -48,22 +49,42 @@ bool World::HasEnemies() const
 
 std::pair<int, int> World::North(const Character& character) const
 {
-	return { character.GetPosition().first, character.GetPosition().second - 1 };
+	std::pair<int, int> north = { character.GetPosition().first, character.GetPosition().second - 1 };
+	if (GetTile(north) == '#') 
+	{
+		return character.GetPosition();
+	}
+	return north;
 }
 
 std::pair<int, int> World::South(const Character& character) const
 {
-	return { character.GetPosition().first, character.GetPosition().second + 1 };
+	std::pair<int,int> south = { character.GetPosition().first, character.GetPosition().second + 1 };
+	if (GetTile(south)=='#')
+	{
+		return character.GetPosition();
+	}
+	return south;
 }
 
 std::pair<int, int> World::East(const Character& character) const
 {
-	return { character.GetPosition().first - 1, character.GetPosition().second };
+	std::pair<int,int> east = { character.GetPosition().first +1, character.GetPosition().second };
+	if (GetTile(east)=='#')
+	{
+		return character.GetPosition();
+	}
+	return east;
 }
 
 std::pair<int, int> World::West(const Character& character) const
 {
-	return { character.GetPosition().first + 1, character.GetPosition().second };
+	std::pair<int,int> west= { character.GetPosition().first - 1, character.GetPosition().second };
+	if (GetTile(west)=='#')
+	{
+		return character.GetPosition();
+	}
+	return west;
 }
 
 void World::HeroAttack()
@@ -136,11 +157,12 @@ std::pair<int, int> World::CheckPosition(
 	std::pair<int, int> begin, 
 	std::pair<int, int> end) const
 {
-	return { 0, 0 };
+	return { 0,0 };
 }
 
 char World::GetTile(std::pair<int, int> xy) const
 {
-	hero_.GetPosition();
-	return '#';
+	std::cout << "pos: " << xy.first << ", " << xy.second << "\n";
+	return'.';
+	return map_.at(xy);
 }
