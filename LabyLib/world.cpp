@@ -18,7 +18,7 @@ World::World(const std::string& map, int length) : hero_({0, 0})
 		}
 		if (c == 'P')
 		{
-			Hero hero(pos);
+			hero_.SetPosition(pos);
 			map_[pos] = '.';
 		}
 		if (c == '.')
@@ -35,11 +35,13 @@ World::World(const std::string& map, int length) : hero_({0, 0})
 
 void World::EraseDead()
 {
-	enemies_.erase(
-	std::remove_if(enemies_.begin(), enemies_.end(), [] (Enemy p)
+	int n = 0;
+	for (auto& enemy:enemies_)
 	{
-		return p.IsDead();
-	}), enemies_.end());
+		enemies_.erase(enemies_.begin() + n);
+		break;
+	}
+	n++;
 }
 
 bool World::HasEnemies() const
@@ -90,7 +92,9 @@ std::pair<int, int> World::West(const Character& character) const
 void World::HeroAttack()
 {
 	for (auto& enemy : enemies_)
+	{
 		hero_.Attack(enemy);
+	}
 }
 
 void World::ShowMap() const
@@ -150,19 +154,19 @@ void World::ShowEnemies() const
 void World::EnemyAttack()
 {
 	for (auto& enemy : enemies_)
+	{
 		enemy.Attack(hero_);
+	}
 }
 
 std::pair<int, int> World::CheckPosition(
 	std::pair<int, int> begin, 
 	std::pair<int, int> end) const
 {
-	return { 0,0 };
+	return {};
 }
 
 char World::GetTile(std::pair<int, int> xy) const
 {
-	std::cout << "pos: " << xy.first << ", " << xy.second << "\n";
-	return'.';
 	return map_.at(xy);
 }

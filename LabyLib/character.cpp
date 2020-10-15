@@ -17,9 +17,12 @@ Character::Character(
 
 void Character::Attack(Character& enemy) const
 {
-	if (Distance(enemy)==1.0f)
-		enemy.SetHealthPoints(enemy.GetHealthPoints() - attack_ + defence_);
+	if (Distance(enemy)== 1)
+	{
+		enemy.SetHealthPoints(std::min(enemy.GetHealthPoints(), enemy.GetHealthPoints() - (attack_ - enemy.GetDefence())));
+	}
 }
+	
 
 bool Character::IsDead() const
 {
