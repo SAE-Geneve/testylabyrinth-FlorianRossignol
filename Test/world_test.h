@@ -14,4 +14,4 @@ namespace test {
 		std::unique_ptr<World> world_ = nullptr;
 	};
 
-} // End namespace test.
+} 
