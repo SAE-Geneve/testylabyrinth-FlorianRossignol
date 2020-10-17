@@ -17,7 +17,7 @@ Character::Character(
 
 void Character::Attack(Character& enemy) const
 {
-	if (Distance(enemy)== 1)
+	if (Distance(enemy)== 1.0f)
 	{
 		enemy.SetHealthPoints(std::min(enemy.GetHealthPoints(), enemy.GetHealthPoints() - (attack_ - enemy.GetDefence())));
 	}

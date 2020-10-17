@@ -14,12 +14,12 @@ World::World(const std::string& map, int length) : hero_({0, 0})
 		{
 			Enemy enemy(pos);
 			enemies_.push_back(enemy);
-			map_[pos] = '.';
+			map_[pos] = 'E';
 		}
 		if (c == 'P')
 		{
 			hero_.SetPosition(pos);
-			map_[pos] = '.';
+			map_[pos] = 'P';
 		}
 		if (c == '.')
 		{
