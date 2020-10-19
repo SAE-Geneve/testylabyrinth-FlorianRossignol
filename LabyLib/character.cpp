@@ -39,8 +39,8 @@ float Character::Distance(const Character& character) const
 	int y1 = xy_.second;
 	int x2 = character.GetPosition().first;
 	int y2 = character.GetPosition().second;
-	int a = x2;
-	int b = y2;
+	int a = x1 - x2;
+	int b = y1 -y2;
 	float d = std::sqrt(a * a + b * b);
 	return d;
 }
